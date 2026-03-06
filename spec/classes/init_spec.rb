@@ -25,7 +25,7 @@ describe 'logrotate' do
                 'ensure' => 'directory',
                 'owner'  => 'root',
                 'group'  => 'wheel',
-                'mode'   => '0755'
+                'mode'   => '0755',
               )
             end
 
@@ -57,18 +57,18 @@ describe 'logrotate' do
               it do
                 is_expected.to contain_service('logrotate.timer').with(
                   'ensure' => 'running',
-                  'enable' => true
+                  'enable' => true,
                 )
 
                 is_expected.to contain_systemd__unit_file('logrotate-hourly.timer').with(
                   'ensure' => 'present',
                   'enable' => true,
-                  'active' => true
+                  'active' => true,
                 )
 
                 is_expected.to contain_systemd__manage_dropin('hourly-timer.conf').with(
                   'ensure' => 'present',
-                  'unit'   => 'logrotate-hourly.timer'
+                  'unit'   => 'logrotate-hourly.timer',
                 )
 
                 is_expected.to contain_systemd__unit_file('logrotate-hourly.service').with_ensure('present').without_enable.without_active
@@ -79,9 +79,9 @@ describe 'logrotate' do
                   'service_entry' => {
                     'ExecStart' => [
                       '',
-                      '/usr/bin/flock --wait 21600 /run/lock/logrotate.service /usr/sbin/logrotate /etc/logrotate.d/hourly'
-                    ]
-                  }
+                      '/usr/bin/flock --wait 21600 /run/lock/logrotate.service /usr/sbin/logrotate /etc/logrotate.d/hourly',
+                    ],
+                  },
                 )
 
                 is_expected.to contain_systemd__manage_dropin('logrotate-flock.conf').with(
@@ -90,9 +90,9 @@ describe 'logrotate' do
                   'service_entry' => {
                     'ExecStart' => [
                       '',
-                      '/usr/bin/flock --wait 21600 /run/lock/logrotate.service /usr/sbin/logrotate /etc/logrotate.conf'
-                    ]
-                  }
+                      '/usr/bin/flock --wait 21600 /run/lock/logrotate.service /usr/sbin/logrotate /etc/logrotate.conf',
+                    ],
+                  },
                 )
               end
             else
@@ -102,7 +102,7 @@ describe 'logrotate' do
                   'ensure' => 'present',
                   'owner'  => 'root',
                   'group'  => 'root',
-                  'mode'   => '0700'
+                  'mode'   => '0700',
                 )
 
                 is_expected.to contain_file('/etc/cron.daily/logrotate').with('ensure' => 'present',
@@ -119,7 +119,7 @@ describe 'logrotate' do
                   'ensure' => 'directory',
                   'owner'  => 'root',
                   'group'  => 'root',
-                  'mode'   => '0755'
+                  'mode'   => '0755',
                 )
               end
 
@@ -183,15 +183,15 @@ describe 'logrotate' do
           case os_facts['os']['name']
           when 'FreeBSD'
             it {
-              is_expected.to contain_logrotate__conf('/usr/local/etc/logrotate.conf').
-                with_prerotate('/usr/bin/test').
-                with_rotate_every('daily')
+              is_expected.to contain_logrotate__conf('/usr/local/etc/logrotate.conf')
+                .with_prerotate('/usr/bin/test')
+                .with_rotate_every('daily')
             }
           else
             it {
-              is_expected.to contain_logrotate__conf('/etc/logrotate.conf').
-                with_prerotate('/usr/bin/test').
-                with_rotate_every('daily')
+              is_expected.to contain_logrotate__conf('/etc/logrotate.conf')
+                .with_prerotate('/usr/bin/test')
+                .with_rotate_every('daily')
             }
           end
         end

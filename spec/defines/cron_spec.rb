@@ -18,15 +18,15 @@ describe 'logrotate::cron' do
 
           if os_facts['os']['family'] == 'FreeBSD'
             it {
-              is_expected.to contain_file('/usr/local/bin/logrotate.test.sh').
-                with_ensure('present').
-                with_content(%r{(/usr/local/sbin/logrotate /usr/local/etc/logrotate.conf 2>&1)})
+              is_expected.to contain_file('/usr/local/bin/logrotate.test.sh')
+                .with_ensure('present')
+                .with_content(%r{(/usr/local/sbin/logrotate /usr/local/etc/logrotate.conf 2>&1)})
             }
           else
             it {
-              is_expected.to contain_file('/etc/cron.test/logrotate').
-                with_ensure('present').
-                with_content(%r{(/usr/sbin/logrotate /etc/logrotate.conf 2>&1)})
+              is_expected.to contain_file('/etc/cron.test/logrotate')
+                .with_ensure('present')
+                .with_content(%r{(/usr/sbin/logrotate /etc/logrotate.conf 2>&1)})
             }
           end
         end
@@ -38,15 +38,15 @@ describe 'logrotate::cron' do
 
           if os_facts['os']['family'] == 'FreeBSD'
             it {
-              is_expected.to contain_file('/usr/local/bin/logrotate.test.sh').
-                with_ensure('present').
-                with_content(%r{(/usr/local/sbin/logrotate -s /var/lib/logrotate/logrotate.status -m /usr/sbin/mailer /usr/local/etc/logrotate.conf 2>&1)})
+              is_expected.to contain_file('/usr/local/bin/logrotate.test.sh')
+                .with_ensure('present')
+                .with_content(%r{(/usr/local/sbin/logrotate -s /var/lib/logrotate/logrotate.status -m /usr/sbin/mailer /usr/local/etc/logrotate.conf 2>&1)})
             }
           else
             it {
-              is_expected.to contain_file('/etc/cron.test/logrotate').
-                with_ensure('present').
-                with_content(%r{(/usr/sbin/logrotate -s /var/lib/logrotate/logrotate.status -m /usr/sbin/mailer /etc/logrotate.conf 2>&1)})
+              is_expected.to contain_file('/etc/cron.test/logrotate')
+                .with_ensure('present')
+                .with_content(%r{(/usr/sbin/logrotate -s /var/lib/logrotate/logrotate.status -m /usr/sbin/mailer /etc/logrotate.conf 2>&1)})
             }
           end
         end
@@ -63,9 +63,9 @@ describe 'logrotate::cron' do
         let(:params) { { ensure: 'present' } }
 
         it {
-          is_expected.to contain_file('/usr/local/bin/logrotate.test.sh').
-            with_ensure('present').
-            with_content(%r{(/usr/local/sbin/logrotate /usr/local/etc/logrotate.conf 2>&1)})
+          is_expected.to contain_file('/usr/local/bin/logrotate.test.sh')
+            .with_ensure('present')
+            .with_content(%r{(/usr/local/sbin/logrotate /usr/local/etc/logrotate.conf 2>&1)})
         }
       end
 
@@ -75,9 +75,9 @@ describe 'logrotate::cron' do
         let(:params) { { ensure: 'present' } }
 
         it {
-          is_expected.to contain_file('/usr/local/bin/logrotate.test.sh').
-            with_ensure('present').
-            with_content(%r{(/usr/local/sbin/logrotate -s /var/lib/logrotate/logrotate.status -m /usr/sbin/mailer /usr/local/etc/logrotate.conf 2>&1)})
+          is_expected.to contain_file('/usr/local/bin/logrotate.test.sh')
+            .with_ensure('present')
+            .with_content(%r{(/usr/local/sbin/logrotate -s /var/lib/logrotate/logrotate.status -m /usr/sbin/mailer /usr/local/etc/logrotate.conf 2>&1)})
         }
       end
 
@@ -87,9 +87,9 @@ describe 'logrotate::cron' do
         let(:params) { { ensure: 'present' } }
 
         it {
-          is_expected.to contain_file('/usr/local/bin/logrotate.test.sh').
-            with_ensure('present').
-            with_content(%r{(else\n    echo "\${OUTPUT}"\nfi)})
+          is_expected.to contain_file('/usr/local/bin/logrotate.test.sh')
+            .with_ensure('present')
+            .with_content(%r{(else\n    echo "\${OUTPUT}"\nfi)})
         }
       end
 
@@ -103,14 +103,14 @@ describe 'logrotate::cron' do
             'minute' => 0,
             'hour' => 1,
             'command' => '/usr/local/bin/logrotate.daily.sh',
-            'user' => 'root'
+            'user' => 'root',
           )
         }
 
         it {
-          is_expected.to contain_file('/usr/local/bin/logrotate.daily.sh').
-            with_ensure('present').
-            with_content(%r{(/usr/local/sbin/logrotate /usr/local/etc/logrotate.conf 2>&1)})
+          is_expected.to contain_file('/usr/local/bin/logrotate.daily.sh')
+            .with_ensure('present')
+            .with_content(%r{(/usr/local/sbin/logrotate /usr/local/etc/logrotate.conf 2>&1)})
         }
       end
 
@@ -124,14 +124,14 @@ describe 'logrotate::cron' do
             'minute' => 1,
             'hour' => '*',
             'command' => '/usr/local/bin/logrotate.hourly.sh',
-            'user' => 'root'
+            'user' => 'root',
           )
         }
 
         it {
-          is_expected.to contain_file('/usr/local/bin/logrotate.hourly.sh').
-            with_ensure('present').
-            with_content(%r{(/usr/local/sbin/logrotate /usr/local/etc/logrotate.d/hourly 2>&1)})
+          is_expected.to contain_file('/usr/local/bin/logrotate.hourly.sh')
+            .with_ensure('present')
+            .with_content(%r{(/usr/local/sbin/logrotate /usr/local/etc/logrotate.d/hourly 2>&1)})
         }
       end
 
@@ -142,13 +142,13 @@ describe 'logrotate::cron' do
 
         it {
           is_expected.to contain_cron('logrotate_test').with(
-            'user' => 'root'
+            'user' => 'root',
           )
         }
 
         it {
-          is_expected.to contain_file('/usr/local/bin/logrotate.test.sh').
-            with_ensure('present')
+          is_expected.to contain_file('/usr/local/bin/logrotate.test.sh')
+            .with_ensure('present')
         }
       end
     end

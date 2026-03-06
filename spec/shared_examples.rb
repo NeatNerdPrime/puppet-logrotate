@@ -33,8 +33,8 @@ shared_context 'config file' do |base_params = {}|
       let(:params) { base_params.merge(param.to_sym => false) }
 
       it {
-        is_expected.to contain_file(config_file).
-          with_content(%r{^#{space_prefix}no(t|)#{param}$})
+        is_expected.to contain_file(config_file)
+          .with_content(%r{^#{space_prefix}no(t|)#{param}$})
       }
     end
 
@@ -42,8 +42,8 @@ shared_context 'config file' do |base_params = {}|
       let(:params) { base_params.merge(param.to_sym => true) }
 
       it {
-        is_expected.to contain_file(config_file).
-          with_content(%r{^#{space_prefix}#{param}$})
+        is_expected.to contain_file(config_file)
+          .with_content(%r{^#{space_prefix}#{param}$})
       }
     end
 
@@ -52,8 +52,8 @@ shared_context 'config file' do |base_params = {}|
         let(:params) { base_params }
 
         it {
-          is_expected.to contain_file(config_file).
-            without_content(%r{^#{space_prefix}(no(t|)|)#{param}$})
+          is_expected.to contain_file(config_file)
+            .without_content(%r{^#{space_prefix}(no(t|)|)#{param}$})
         }
       end
     end
@@ -66,8 +66,8 @@ shared_context 'config file' do |base_params = {}|
           let(:params) { base_params.merge(param.to_sym => value) }
 
           it {
-            is_expected.to contain_file(config_file).
-              with_content(%r{^#{space_prefix}#{param} #{value}$})
+            is_expected.to contain_file(config_file)
+              .with_content(%r{^#{space_prefix}#{param} #{value}$})
           }
         end
       end
@@ -88,8 +88,8 @@ shared_context 'config file' do |base_params = {}|
           let(:params) { base_params.merge(param.to_sym => value) }
 
           it {
-            is_expected.to contain_file(config_file).
-              with_content(%r{^#{space_prefix}#{param} #{value}})
+            is_expected.to contain_file(config_file)
+              .with_content(%r{^#{space_prefix}#{param} #{value}})
           }
         end
       end
