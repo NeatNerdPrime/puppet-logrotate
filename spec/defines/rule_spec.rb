@@ -10,9 +10,9 @@ describe 'logrotate::rule' do
         {
           'operatingsystem' => 'RedHat',
           'operatingsystemrelease' => ['8'],
-        }
-      ]
-    }
+        },
+      ],
+    },
   ).first
   let(:facts) { facts }
 
@@ -40,7 +40,7 @@ describe 'logrotate::rule' do
           'owner' => 'root',
           'group' => 'root',
           'ensure' => 'present',
-          'mode' => '0644'
+          'mode' => '0644',
         ).with_content(%r{^/var/log/foo\.log \{\n\}\n})
       end
     end
@@ -49,8 +49,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: ['/var/log/foo1.log', '/var/log/foo2.log'] } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{/var/log/foo1\.log /var/log/foo2\.log \{\n\}\n})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{/var/log/foo1\.log /var/log/foo2\.log \{\n\}\n})
       }
     end
 
@@ -60,8 +60,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', compresscmd: 'bzip2' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  compresscmd bzip2$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  compresscmd bzip2$})
       }
     end
 
@@ -71,8 +71,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', compressext: '.bz2' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  compressext .bz2$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  compressext .bz2$})
       }
     end
 
@@ -82,8 +82,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', compressoptions: '-9' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  compressoptions -9$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  compressoptions -9$})
       }
     end
 
@@ -94,8 +94,8 @@ describe 'logrotate::rule' do
         let(:params) { { path: '/var/log/foo.log', create: true } }
 
         it {
-          is_expected.to contain_file('/etc/logrotate.d/test').
-            with_content(%r{^  create$})
+          is_expected.to contain_file('/etc/logrotate.d/test')
+            .with_content(%r{^  create$})
         }
       end
 
@@ -104,7 +104,7 @@ describe 'logrotate::rule' do
           {
             path: '/var/log/foo.log',
             create: true,
-            create_mode: '0777'
+            create_mode: '0777',
           }
         end
 
@@ -119,13 +119,13 @@ describe 'logrotate::rule' do
             path: '/var/log/foo.log',
             create: true,
             create_mode: '0777',
-            create_owner: 'www-data'
+            create_owner: 'www-data',
           }
         end
 
         it do
-          is_expected.to contain_file('/etc/logrotate.d/test').
-            with_content(%r{^  create 0777 www-data})
+          is_expected.to contain_file('/etc/logrotate.d/test')
+            .with_content(%r{^  create 0777 www-data})
         end
 
         context 'and create_group => admin' do
@@ -135,13 +135,13 @@ describe 'logrotate::rule' do
               create: true,
               create_mode: '0777',
               create_owner: 'www-data',
-              create_group: 'admin'
+              create_group: 'admin',
             }
           end
 
           it {
-            is_expected.to contain_file('/etc/logrotate.d/test').
-              with_content(%r{^  create 0777 www-data admin$})
+            is_expected.to contain_file('/etc/logrotate.d/test')
+              .with_content(%r{^  create 0777 www-data admin$})
           }
         end
       end
@@ -152,7 +152,7 @@ describe 'logrotate::rule' do
             path: '/var/log/foo.log',
             create: true,
             create_mode: '0777',
-            create_group: 'admin'
+            create_group: 'admin',
           }
         end
 
@@ -168,7 +168,7 @@ describe 'logrotate::rule' do
           {
             path: '/var/log/foo.log',
             create: true,
-            create_owner: 'www-data'
+            create_owner: 'www-data',
           }
         end
 
@@ -184,8 +184,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', create: false } }
 
       it do
-        is_expected.to contain_file('/etc/logrotate.d/test'). \
-          with_content(%r{^  nocreate$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  nocreate$})
       end
 
       context 'and create_mode => 0777' do
@@ -193,7 +193,7 @@ describe 'logrotate::rule' do
           {
             path: '/var/log/foo.log',
             create: false,
-            create_mode: '0777'
+            create_mode: '0777',
           }
         end
 
@@ -211,8 +211,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', custom_cfg: ['hourly'] } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test'). \
-          with_content(%r{^  hourly$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  hourly$})
       }
     end
 
@@ -222,8 +222,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', dateformat: '-%Y%m%d' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test'). \
-          with_content(%r{^  dateformat -%Y%m%d$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  dateformat -%Y%m%d$})
       }
     end
 
@@ -233,8 +233,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', extension: '.foo' } }
 
       it do
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  extension \.foo$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  extension \.foo$})
       end
     end
 
@@ -244,8 +244,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', mail: 'test@example.com' } }
 
       it do
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  mail test@example.com$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  mail test@example.com$})
       end
 
       context 'and mailfirst => true' do
@@ -253,13 +253,13 @@ describe 'logrotate::rule' do
           {
             path: '/var/log/foo.log',
             mail: 'test@example.com',
-            mail_when: 'mailfirst'
+            mail_when: 'mailfirst',
           }
         end
 
         it do
-          is_expected.to contain_file('/etc/logrotate.d/test').
-            with_content(%r{^  mailfirst$})
+          is_expected.to contain_file('/etc/logrotate.d/test')
+            .with_content(%r{^  mailfirst$})
         end
       end
 
@@ -268,13 +268,13 @@ describe 'logrotate::rule' do
           {
             path: '/var/log/foo.log',
             mail: 'test@example.com',
-            mail_when: 'maillast'
+            mail_when: 'maillast',
           }
         end
 
         it {
-          is_expected.to contain_file('/etc/logrotate.d/test').
-            with_content(%r{^  maillast$})
+          is_expected.to contain_file('/etc/logrotate.d/test')
+            .with_content(%r{^  maillast$})
         }
       end
     end
@@ -283,8 +283,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', mail: false } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  nomail$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  nomail$})
       }
     end
 
@@ -294,8 +294,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', olddir: '/var/log/old' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  olddir /var/log/old$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  olddir /var/log/old$})
       }
     end
 
@@ -303,8 +303,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', olddir: false } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  noolddir$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  noolddir$})
       }
     end
 
@@ -314,8 +314,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', createolddir: true } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  createolddir$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  createolddir$})
       }
     end
 
@@ -323,8 +323,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', createolddir: false } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  nocreateolddir$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  nocreateolddir$})
       }
     end
 
@@ -333,13 +333,13 @@ describe 'logrotate::rule' do
         {
           path: '/var/log/foo.log',
           createolddir: true,
-          createolddir_mode: '0755'
+          createolddir_mode: '0755',
         }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  createolddir 0755$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  createolddir 0755$})
       }
     end
 
@@ -349,13 +349,13 @@ describe 'logrotate::rule' do
           path: '/var/log/foo.log',
           createolddir: true,
           createolddir_mode: '0755',
-          createolddir_owner: 'httpd'
+          createolddir_owner: 'httpd',
         }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  createolddir 0755 httpd$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  createolddir 0755 httpd$})
       }
     end
 
@@ -366,13 +366,13 @@ describe 'logrotate::rule' do
           createolddir: true,
           createolddir_mode: '0755',
           createolddir_owner: 'httpd',
-          createolddir_group: 'www'
+          createolddir_group: 'www',
         }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  createolddir 0755 httpd www$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  createolddir 0755 httpd www$})
       }
     end
 
@@ -382,13 +382,13 @@ describe 'logrotate::rule' do
       let(:params) do
         {
           path: '/var/log/foo.log',
-          postrotate: '/bin/true'
+          postrotate: '/bin/true',
         }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{postrotate\n    /bin/true\n  endscript})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{postrotate\n    /bin/true\n  endscript})
       }
     end
 
@@ -396,13 +396,13 @@ describe 'logrotate::rule' do
       let(:params) do
         {
           path: '/var/log/foo.log',
-          postrotate: ['/bin/true', '/bin/false']
+          postrotate: ['/bin/true', '/bin/false'],
         }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{postrotate\n    /bin/true\n    /bin/false\n  endscript})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{postrotate\n    /bin/true\n    /bin/false\n  endscript})
       }
     end
 
@@ -412,8 +412,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', prerotate: '/bin/true' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{prerotate\n    /bin/true\n  endscript})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{prerotate\n    /bin/true\n  endscript})
       }
     end
 
@@ -421,8 +421,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', prerotate: ['/bin/true', '/bin/false'] } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{prerotate\n    /bin/true\n    /bin/false\n  endscript})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{prerotate\n    /bin/true\n    /bin/false\n  endscript})
       }
     end
 
@@ -432,8 +432,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', firstaction: '/bin/true' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{firstaction\n    /bin/true\n  endscript})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{firstaction\n    /bin/true\n  endscript})
       }
     end
 
@@ -441,8 +441,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', firstaction: ['/bin/true', '/bin/false'] } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{firstaction\n    /bin/true\n    /bin/false\n  endscript})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{firstaction\n    /bin/true\n    /bin/false\n  endscript})
       }
     end
 
@@ -452,8 +452,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', lastaction: '/bin/true' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{lastaction\n    /bin/true\n  endscript})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{lastaction\n    /bin/true\n  endscript})
       }
     end
 
@@ -461,8 +461,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', lastaction: ['/bin/true', '/bin/false'] } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test'). \
-          with_content(%r{lastaction\n    /bin/true\n    /bin/false\n  endscript})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{lastaction\n    /bin/true\n    /bin/false\n  endscript})
       }
     end
 
@@ -472,8 +472,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', rotate: 3 } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test'). \
-          with_content(%r{^  rotate 3$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  rotate 3$})
       }
     end
 
@@ -491,13 +491,13 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', rotate_every: 'day' } }
 
       it do
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  daily$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  daily$})
       end
 
       it do
-        is_expected.to contain_file('/etc/logrotate.d/hourly/test').
-          with_ensure('absent')
+        is_expected.to contain_file('/etc/logrotate.d/hourly/test')
+          .with_ensure('absent')
       end
     end
 
@@ -505,13 +505,13 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', rotate_every: 'week' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  weekly$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  weekly$})
       }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/hourly/test').
-          with_ensure('absent')
+        is_expected.to contain_file('/etc/logrotate.d/hourly/test')
+          .with_ensure('absent')
       }
     end
 
@@ -519,13 +519,13 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', rotate_every: 'weekly 0' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  weekly 0$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  weekly 0$})
       }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/hourly/test').
-          with_ensure('absent')
+        is_expected.to contain_file('/etc/logrotate.d/hourly/test')
+          .with_ensure('absent')
       }
     end
 
@@ -533,13 +533,13 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', rotate_every: 'weekly 7' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  weekly 7$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  weekly 7$})
       }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/hourly/test').
-          with_ensure('absent')
+        is_expected.to contain_file('/etc/logrotate.d/hourly/test')
+          .with_ensure('absent')
       }
     end
 
@@ -547,13 +547,13 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', rotate_every: 'month' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  monthly$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  monthly$})
       }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/hourly/test').
-          with_ensure('absent')
+        is_expected.to contain_file('/etc/logrotate.d/hourly/test')
+          .with_ensure('absent')
       }
     end
 
@@ -561,13 +561,13 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', rotate_every: 'year' } }
 
       it do
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  yearly$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  yearly$})
       end
 
       it do
-        is_expected.to contain_file('/etc/logrotate.d/hourly/test').
-          with_ensure('absent')
+        is_expected.to contain_file('/etc/logrotate.d/hourly/test')
+          .with_ensure('absent')
       end
     end
 
@@ -583,8 +583,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', sharedscripts: true } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  sharedscripts$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  sharedscripts$})
       }
     end
 
@@ -592,8 +592,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', sharedscripts: false } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  nosharedscripts$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  nosharedscripts$})
       }
     end
 
@@ -603,13 +603,13 @@ describe 'logrotate::rule' do
       let(:params) do
         {
           path: '/var/log/foo.log',
-          shred: true
+          shred: true,
         }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  shred$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  shred$})
       }
 
       context 'and shredcycles => 3' do
@@ -617,13 +617,13 @@ describe 'logrotate::rule' do
           {
             path: '/var/log/foo.log',
             shred: true,
-            shredcycles: 3
+            shredcycles: 3,
           }
         end
 
         it {
-          is_expected.to contain_file('/etc/logrotate.d/test').
-            with_content(%r{^  shredcycles 3$})
+          is_expected.to contain_file('/etc/logrotate.d/test')
+            .with_content(%r{^  shredcycles 3$})
         }
       end
     end
@@ -632,8 +632,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', shred: false } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  noshred$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  noshred$})
       }
     end
 
@@ -643,13 +643,13 @@ describe 'logrotate::rule' do
       let(:params) do
         {
           path: '/var/log/foo.log',
-          start: 0
+          start: 0,
         }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  start 0$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  start 0$})
       }
     end
 
@@ -663,13 +663,13 @@ describe 'logrotate::rule' do
             path: '/var/log/foo.log',
             su: true,
             su_user: 'www-data',
-            su_group: 'admin'
+            su_group: 'admin',
           }
         end
 
         it {
-          is_expected.to contain_file('/etc/logrotate.d/test').
-            with_content(%r{^  su www-data admin$})
+          is_expected.to contain_file('/etc/logrotate.d/test')
+            .with_content(%r{^  su www-data admin$})
         }
       end
 
@@ -679,13 +679,13 @@ describe 'logrotate::rule' do
           {
             path: '/var/log/foo.log',
             su: true,
-            su_user: 'www-data'
+            su_user: 'www-data',
           }
         end
 
         it {
-          is_expected.to contain_file('/etc/logrotate.d/test').
-            with_content(%r{^\s+su www-data root$})
+          is_expected.to contain_file('/etc/logrotate.d/test')
+            .with_content(%r{^\s+su www-data root$})
         }
       end
 
@@ -695,13 +695,13 @@ describe 'logrotate::rule' do
           {
             path: '/var/log/foo.log',
             su: true,
-            su_group: 'admin'
+            su_group: 'admin',
           }
         end
 
         it {
-          is_expected.to contain_file('/etc/logrotate.d/test').
-            with_content(%r{^\s+su root admin$})
+          is_expected.to contain_file('/etc/logrotate.d/test')
+            .with_content(%r{^\s+su root admin$})
         }
       end
     end
@@ -711,13 +711,13 @@ describe 'logrotate::rule' do
       let(:params) do
         {
           path: '/var/log/foo.log',
-          su: false
+          su: false,
         }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          without_content(%r{^\s+su\s})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .without_content(%r{^\s+su\s})
       }
     end
 
@@ -726,13 +726,13 @@ describe 'logrotate::rule' do
       let(:params) do
         {
           path: '/var/log/foo.log',
-          su: :undef
+          su: :undef,
         }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          without_content(%r{^\s+su\s})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .without_content(%r{^\s+su\s})
       }
     end
 
@@ -742,8 +742,8 @@ describe 'logrotate::rule' do
       let(:params) { { path: '/var/log/foo.log', uncompresscmd: 'bunzip2' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.d/test').
-          with_content(%r{^  uncompresscmd bunzip2$})
+        is_expected.to contain_file('/etc/logrotate.d/test')
+          .with_content(%r{^  uncompresscmd bunzip2$})
       }
     end
 
@@ -777,13 +777,13 @@ describe 'logrotate::rule' do
       {
         path: '/var/log/btmp',
         rotate: 10,
-        rotate_every: 'day'
+        rotate_every: 'day',
       }
     end
 
     it do
-      is_expected.to contain_file('/etc/logrotate.d/btmp').
-        with_content(%r{
+      is_expected.to contain_file('/etc/logrotate.d/btmp')
+        .with_content(%r{
 /var/log/btmp {
   daily
   rotate 10
@@ -800,13 +800,13 @@ describe 'logrotate::rule' do
       {
         path: '/var/log/wtmp',
         rotate: 10,
-        rotate_every: 'day'
+        rotate_every: 'day',
       }
     end
 
     it do
-      is_expected.to contain_file('/etc/logrotate.d/wtmp').
-        with_content(%r{
+      is_expected.to contain_file('/etc/logrotate.d/wtmp')
+        .with_content(%r{
 /var/log/wtmp {
   daily
   rotate 10
@@ -820,13 +820,13 @@ describe 'logrotate::rule' do
     let(:params) do
       {
         path: '/var/log/foo.log',
-        ifempty: true
+        ifempty: true,
       }
     end
     let(:facts) do
       {
         os: { family: 'RedHat', release: { major: '7' } },
-        operatingsystemmajrelease: 7
+        operatingsystemmajrelease: 7,
       }
     end
 
@@ -839,7 +839,7 @@ describe 'logrotate::rule' do
         'owner' => 'root',
         'group' => 'root',
         'ensure' => 'present',
-        'mode' => '0644'
+        'mode' => '0644',
       )
     end
   end
@@ -849,7 +849,7 @@ describe 'logrotate::rule' do
     let(:params) do
       {
         path: '/var/log/btmp',
-        rotate_every: 'hourly'
+        rotate_every: 'hourly',
       }
     end
 
@@ -858,7 +858,7 @@ describe 'logrotate::rule' do
         'owner' => 'root',
         'group' => 'root',
         'ensure' => 'present',
-        'mode' => '0644'
+        'mode' => '0644',
       )
     end
   end
@@ -868,7 +868,7 @@ describe 'logrotate::rule' do
     let(:params) do
       {
         path: '/var/log/wtmp',
-        rotate_every: 'hourly'
+        rotate_every: 'hourly',
       }
     end
 
@@ -877,7 +877,7 @@ describe 'logrotate::rule' do
         'owner' => 'root',
         'group' => 'root',
         'ensure' => 'present',
-        'mode' => '0644'
+        'mode' => '0644',
       )
     end
   end
@@ -887,7 +887,7 @@ describe 'logrotate::rule' do
     let(:params) do
       {
         path: '/var/log/foo.log',
-        rotate_every: 'hourly'
+        rotate_every: 'hourly',
       }
     end
 
@@ -896,7 +896,7 @@ describe 'logrotate::rule' do
         'owner' => 'root',
         'group' => 'root',
         'ensure' => 'present',
-        'mode' => '0644'
+        'mode' => '0644',
       )
     end
   end

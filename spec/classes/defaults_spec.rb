@@ -28,7 +28,7 @@ describe 'logrotate' do
           'create_mode' => '0664',
           'create_owner' => 'root',
           'create_group' => 'utmp',
-          'missingok' => true
+          'missingok' => true,
         )
       }
 
@@ -40,7 +40,7 @@ describe 'logrotate' do
           'create_mode' => '0600',
           'create_owner' => 'root',
           'create_group' => 'utmp',
-          'missingok' => true
+          'missingok' => true,
         )
       }
     end
@@ -51,7 +51,7 @@ describe 'logrotate' do
       it {
         is_expected.to contain_logrotate__conf('/etc/logrotate.conf').with(
           'su_user' => 'root',
-          'su_group' => 'adm'
+          'su_group' => 'adm',
         )
       }
     end
@@ -73,7 +73,7 @@ describe 'logrotate' do
           'create_owner' => 'root',
           'create_group' => 'utmp',
           'rotate' => 1,
-          'rotate_every' => 'monthly'
+          'rotate_every' => 'monthly',
         )
       }
 
@@ -86,7 +86,7 @@ describe 'logrotate' do
           'create_owner' => 'root',
           'create_group' => 'utmp',
           'rotate' => 1,
-          'rotate_every' => 'monthly'
+          'rotate_every' => 'monthly',
         )
       }
     end
@@ -108,7 +108,7 @@ describe 'logrotate' do
           'maxage' => '365',
           'rotate' => 99,
           'rotate_every' => 'monthly',
-          'size' => '400k'
+          'size' => '400k',
         )
       }
     end
@@ -123,7 +123,7 @@ describe 'logrotate' do
       it {
         is_expected.to contain_logrotate__conf('/usr/local/etc/logrotate.conf').with(
           'su_user' => 'root',
-          'su_group' => 'wheel'
+          'su_group' => 'wheel',
         )
       }
     end

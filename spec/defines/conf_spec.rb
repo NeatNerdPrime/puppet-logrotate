@@ -9,9 +9,9 @@ describe 'logrotate::conf' do
         {
           'operatingsystem' => 'RedHat',
           'operatingsystemrelease' => ['8'],
-        }
-      ]
-    }
+        },
+      ],
+    },
   ).first
   let(:facts) { facts }
 
@@ -45,8 +45,8 @@ describe 'logrotate::conf' do
       let(:params) { { param.to_sym => false } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^no(t|)#{param}$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^no(t|)#{param}$})
       }
     end
 
@@ -54,16 +54,16 @@ describe 'logrotate::conf' do
       let(:params) { { param.to_sym => true } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^#{param}$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^#{param}$})
       }
     end
 
     if optional
       context "#{param} missing by default" do
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            without_content(%r{^(no(t|)|)#{param}$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .without_content(%r{^(no(t|)|)#{param}$})
         }
       end
     end
@@ -76,8 +76,8 @@ describe 'logrotate::conf' do
           let(:params) { { param.to_sym => value } }
 
           it {
-            is_expected.to contain_file('/etc/logrotate.conf').
-              with_content(%r{^#{param} #{value}$})
+            is_expected.to contain_file('/etc/logrotate.conf')
+              .with_content(%r{^#{param} #{value}$})
           }
         end
       end
@@ -98,8 +98,8 @@ describe 'logrotate::conf' do
           let(:params) { params.merge(param.to_sym => value) }
 
           it {
-            is_expected.to contain_file('/etc/logrotate.conf').
-              with_content(%r{^#{param} #{value}})
+            is_expected.to contain_file('/etc/logrotate.conf')
+              .with_content(%r{^#{param} #{value}})
           }
         end
       end
@@ -124,7 +124,7 @@ describe 'logrotate::conf' do
         'owner' => 'root',
         'group' => 'root',
         'ensure' => 'present',
-        'mode' => '0644'
+        'mode' => '0644',
       ).with_content(%r{\ninclude /etc/logrotate.d\n})
     }
 
@@ -132,8 +132,8 @@ describe 'logrotate::conf' do
       let(:params) { { compresscmd: 'bzip2' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^compresscmd bzip2$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^compresscmd bzip2$})
       }
     end
 
@@ -143,32 +143,32 @@ describe 'logrotate::conf' do
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          without_content(%r{^su .*$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .without_content(%r{^su .*$})
       }
     end
 
     context 'su_user => apache' do
       let(:params) do
         { su: true,
-          su_user: 'apache' }
+          su_user: 'apache', }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^su apache root$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^su apache root$})
       }
 
       context 'su_group => apache' do
         let(:params) do
           { su: true,
             su_user: 'apache',
-            su_group: 'apache' }
+            su_group: 'apache', }
         end
 
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            with_content(%r{^su apache apache$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .with_content(%r{^su apache apache$})
         }
       end
     end
@@ -176,12 +176,12 @@ describe 'logrotate::conf' do
     context 'su_group => apache' do
       let(:params) do
         { su: true,
-          su_group: 'apache' }
+          su_group: 'apache', }
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^su root apache$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^su root apache$})
       }
     end
 
@@ -191,8 +191,8 @@ describe 'logrotate::conf' do
       end
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^su root root$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^su root root$})
       }
     end
 
@@ -200,8 +200,8 @@ describe 'logrotate::conf' do
       let(:params) { { compressext: '.bz2' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^compressext .bz2$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^compressext .bz2$})
       }
     end
 
@@ -209,8 +209,8 @@ describe 'logrotate::conf' do
       let(:params) { { compressoptions: '-9' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^compressoptions -9$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^compressoptions -9$})
       }
     end
 
@@ -219,24 +219,24 @@ describe 'logrotate::conf' do
       context 'create_mode => 0777' do
         let(:params) do
           { create: true,
-            create_mode: '0777' }
+            create_mode: '0777', }
         end
 
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            with_content(%r{^create 0777$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .with_content(%r{^create 0777$})
         }
 
         context 'create_owner => www-data' do
           let(:params) do
             { create: true,
               create_mode: '0777',
-              create_owner: 'www-data' }
+              create_owner: 'www-data', }
           end
 
           it {
-            is_expected.to contain_file('/etc/logrotate.conf').
-              with_content(%r{^create 0777 www-data})
+            is_expected.to contain_file('/etc/logrotate.conf')
+              .with_content(%r{^create 0777 www-data})
           }
 
           context 'create_group => admin' do
@@ -244,12 +244,12 @@ describe 'logrotate::conf' do
               { create: true,
                 create_mode: '0777',
                 create_owner: 'www-data',
-                create_group: 'admin' }
+                create_group: 'admin', }
             end
 
             it {
-              is_expected.to contain_file('/etc/logrotate.conf').
-                with_content(%r{^create 0777 www-data admin$})
+              is_expected.to contain_file('/etc/logrotate.conf')
+                .with_content(%r{^create 0777 www-data admin$})
             }
           end
         end
@@ -258,7 +258,7 @@ describe 'logrotate::conf' do
           let(:params) do
             { create: true,
               create_mode: '0777',
-              create_group: 'admin' }
+              create_group: 'admin', }
           end
 
           it {
@@ -272,7 +272,7 @@ describe 'logrotate::conf' do
       context 'create_owner => www-data' do
         let(:params) do
           { create: true,
-            create_owner: 'www-data' }
+            create_owner: 'www-data', }
         end
 
         it {
@@ -287,14 +287,14 @@ describe 'logrotate::conf' do
       let(:params) { { create: false } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^nocreate$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^nocreate$})
       }
 
       context 'create_mode => 0777' do
         let(:params) do
           { create: false,
-            create_mode: '0777' }
+            create_mode: '0777', }
         end
 
         it {
@@ -309,8 +309,8 @@ describe 'logrotate::conf' do
       let(:params) { { dateformat: '-%Y%m%d' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf'). \
-          with_content(%r{^dateformat -%Y%m%d$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^dateformat -%Y%m%d$})
       }
     end
 
@@ -318,8 +318,8 @@ describe 'logrotate::conf' do
       let(:params) { { extension: '.foo' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^extension \.foo$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^extension \.foo$})
       }
     end
 
@@ -329,8 +329,8 @@ describe 'logrotate::conf' do
         let(:params) { { include: '/etc/logrotate.d/extra' } }
 
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            with_content(%r{^include /etc/logrotate\.d/extra$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .with_content(%r{^include /etc/logrotate\.d/extra$})
         }
       end
 
@@ -338,16 +338,16 @@ describe 'logrotate::conf' do
         let(:params) { { include: ['/etc/logrotate.d/extra', '/etc/logrotate.d/custom'] } }
 
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            with_content(%r{^include /etc/logrotate\.d/custom$}).
-            with_content(%r{^include /etc/logrotate\.d/extra$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .with_content(%r{^include /etc/logrotate\.d/custom$})
+            .with_content(%r{^include /etc/logrotate\.d/extra$})
         }
       end
 
       context 'missing by default' do
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            without_content(%r{^include /etc/logrotate\.d/extra$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .without_content(%r{^include /etc/logrotate\.d/extra$})
         }
       end
     end
@@ -358,20 +358,20 @@ describe 'logrotate::conf' do
         let(:params) { { mail: 'test@example.com' } }
 
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            with_content(%r{^mail test@example.com$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .with_content(%r{^mail test@example.com$})
         }
 
         %w[mailfirst maillast].each do |value|
           context "mail_when => #{value}" do
             let(:params) do
               { mail: 'test@example.com',
-                mail_when: value }
+                mail_when: value, }
             end
 
             it {
-              is_expected.to contain_file('/etc/logrotate.conf').
-                with_content(%r{^#{value}})
+              is_expected.to contain_file('/etc/logrotate.conf')
+                .with_content(%r{^#{value}})
             }
           end
         end
@@ -381,8 +381,8 @@ describe 'logrotate::conf' do
         let(:params) { { mail: false } }
 
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            with_content(%r{^nomail$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .with_content(%r{^nomail$})
         }
       end
     end
@@ -392,8 +392,8 @@ describe 'logrotate::conf' do
         let(:params) { { olddir: '/var/log/old' } }
 
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            with_content(%r{^olddir /var/log/old$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .with_content(%r{^olddir /var/log/old$})
         }
       end
 
@@ -401,8 +401,8 @@ describe 'logrotate::conf' do
         let(:params) { { olddir: false } }
 
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            with_content(%r{^noolddir$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .with_content(%r{^noolddir$})
         }
       end
     end
@@ -412,8 +412,8 @@ describe 'logrotate::conf' do
         let(:params) { { param.to_sym => '/bin/true' } }
 
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            with_content(%r{#{param}\n\s{2}/bin/true\nendscript})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .with_content(%r{#{param}\n\s{2}/bin/true\nendscript})
         }
       end
     end
@@ -424,8 +424,8 @@ describe 'logrotate::conf' do
         let(:params) { { rotate_every: 'day' } }
 
         it {
-          is_expected.to contain_file('/etc/logrotate.conf').
-            with_content(%r{^daily$})
+          is_expected.to contain_file('/etc/logrotate.conf')
+            .with_content(%r{^daily$})
         }
       end
 
@@ -434,8 +434,8 @@ describe 'logrotate::conf' do
           let(:params) { { rotate_every: rotate } }
 
           it {
-            is_expected.to contain_file('/etc/logrotate.conf').
-              with_content(%r{^#{rotate}ly})
+            is_expected.to contain_file('/etc/logrotate.conf')
+              .with_content(%r{^#{rotate}ly})
           }
         end
       end
@@ -452,8 +452,8 @@ describe 'logrotate::conf' do
       let(:params) { { uncompresscmd: 'bunzip2' } }
 
       it {
-        is_expected.to contain_file('/etc/logrotate.conf').
-          with_content(%r{^uncompresscmd bunzip2$})
+        is_expected.to contain_file('/etc/logrotate.conf')
+          .with_content(%r{^uncompresscmd bunzip2$})
       }
     end
 
@@ -483,7 +483,7 @@ describe 'logrotate::conf' do
         'owner' => 'root',
         'group' => 'root',
         'ensure' => 'present',
-        'mode' => '0644'
+        'mode' => '0644',
       ).with_content(%r{\ninclude /etc/logrotate.d\n})
     }
   end
@@ -496,7 +496,7 @@ describe 'logrotate::conf' do
         'owner' => 'root',
         'group' => 'root',
         'ensure' => 'present',
-        'mode' => '0644'
+        'mode' => '0644',
       ).with_content(%r{\ninclude /etc/logrotate.d\n})
     }
   end
